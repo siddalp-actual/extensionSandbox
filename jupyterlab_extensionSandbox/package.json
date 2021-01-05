@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "name": "jupyterlab_extensionSandbox",
+  "version": "0.0.1",
+  "description": "learning howto",
+  "author": "Pete Siddall",
+  "main": "lib/plugin.js",
+  "keywords": [
+    "jupyter",
+    "jupyterlab",
+    "jupyterlab-extension"
+  ],
+  "jupyterlab": {
+    "extension": true
+  },
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {}
+}
