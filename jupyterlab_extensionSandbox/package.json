@@ -1,8 +1,8 @@
 {
   "private": true,
   "name": "jupyterlab_extensionSandbox",
-  "version": "0.0.1",
-  "description": "learning howto",
+  "version": "0.0.2",
+  "description": "Pete's Sandbox, a learning howto, implements the Tutorial apod widget, and a RUN-ALL button ",
   "author": "Pete Siddall",
   "main": "lib/plugin.js",
   "keywords": [
