@@ -47,11 +47,11 @@ class ButtonExtension /* implements DocumentRegistry.IWidgetExtension<NotebookPa
       className: 'myButton',
       iconClass: 'fa fa-fast-forward',
       onClick: callback,
-      tooltip: 'Run All'
-      // label: 'RnAl'
+      tooltip: 'Run all cells',
+      label: 'RunAll'
     });
-
-    panel.toolbar.insertItem(0, 'runAll', button);
+    console.log('new ButtonExtension with: ' + context.contentsModel)
+    panel.toolbar.insertItem(10, 'runAll', button);
     return new DisposableDelegate(() => {
       button.dispose();
     });
@@ -59,6 +59,12 @@ class ButtonExtension /* implements DocumentRegistry.IWidgetExtension<NotebookPa
 }
 
 function activateFunction(app, palette) {
+    /*
+    ** The parameters passed into this are
+    ** app, a JupyterFrontEnd
+    ** and anything on the required or optional properties of the object
+    ** here, an ICommandPalette
+    */
     console.log('JupyterLab extension jupyterlab_extensionSandbox is activated!');
     console.log('app commands:', app.commands);
     console.log('ICommandPalette:', palette)
