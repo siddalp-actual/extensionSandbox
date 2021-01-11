@@ -97,11 +97,55 @@ getAllFunctions(a)
 
 
 // -
-// ## 8/1/21 Button Success, but less with model
+// ## 8/1/21: Button Success, but less with model
 //
 // I found another project which added a button, and noticed that it had some css defining properties for the class matching the button className. I added something here, but it made no difference.  Then I went back to adding the `label` property and this time the label displayed. Backed out the css and the label still appears.
 //
 // I noticed that the IContext object passed to the button's `createNew` method has both `model` and `contentModel` properties.  The `model` seems to have properties about the kernel in use, but it seems that `contentsModel` is null. :-(
+
+
+// ## 11/1/21: docRegistry
+//
+// The `JupyterFrontEnd` application object passed to the activate method, carries within it a reference to the documentRegistry for the application.  Widgets and model Factories get registered in this registry, so can I use this to find the document model?
+// > No, doesn't look like it
+//
+// Aha, the serviceManager looks interesting.  But I'm getting the feeling that I'm the wrong side of the client server interface to see things like file-system modification times.  The client end is just talking to an http port.
+//
+// ### But Wait!
+//
+// There's a really nice object browser built into the chrome developer tools.  If I just display an object with `console.log` then in the developer tools Console, I can drill down into that object.
+//
+// And I've now added the IDocumentManager as an optional handle for the Docunent Manager to the plugin and this contains the `contexts` and access to the `_contentsModel`.
+//
+// ```javascript
+// import {
+//   IDocumentManager
+// } from '@jupyterlab/docmanager'
+//
+// export default [{
+//     ...
+//     optional: [ICommandPalette, IDocumentManager],
+//     activate: activateFunction
+// }];
+//
+// ```
+// Outstanding question?  How do I know which context relates to the document in 'this' window?
+//
+// ### Button Icon Success
+//
+// Read a section on reusing ui-components.  I found `ui-components/src/icon/iconimports.ts` which makes the exports for a whole load of pre-defined svg icons.  I reckoned that `fastForwardIcon` was the one I wanted and added:
+// ```javascript
+// import {
+//   fastForwardIcon
+// } from '@jupyterlab/ui-components';
+//
+// let button = new ToolbarButton({
+//     ...
+//       icon: fastForwardIcon,
+//     ...
+// })
+//
+// ```
 
 
 

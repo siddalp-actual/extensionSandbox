@@ -12,8 +12,20 @@ import {
 } from '@jupyterlab/apputils';
 
 import {
+  DocumentRegistry
+} from '@jupyterlab/docregistry';
+
+import {
   NotebookActions, NotebookPanel, INotebookModel
 } from '@jupyterlab/notebook';
+
+import {
+  fastForwardIcon
+} from '@jupyterlab/ui-components';
+
+import {
+  IDocumentManager
+} from '@jupyterlab/docmanager'
 
 import {
   Widget
@@ -27,7 +39,7 @@ import {
 export default [{
     id: 'jupyterlab_extensionSandbox',
     autoStart: true,
-    optional: [ICommandPalette],
+    optional: [ICommandPalette, IDocumentManager],
     activate: activateFunction
 }];
 
@@ -45,7 +57,8 @@ class ButtonExtension /* implements DocumentRegistry.IWidgetExtension<NotebookPa
     };
     let button = new ToolbarButton({
       className: 'myButton',
-      iconClass: 'fa fa-fast-forward',
+      iconClass: 'fast-forward',
+      icon: fastForwardIcon,
       onClick: callback,
       tooltip: 'Run all cells',
       label: 'RunAll'
@@ -58,7 +71,7 @@ class ButtonExtension /* implements DocumentRegistry.IWidgetExtension<NotebookPa
   }
 }
 
-function activateFunction(app, palette) {
+function activateFunction(app, palette, docMgr) {
     /*
     ** The parameters passed into this are
     ** app, a JupyterFrontEnd
@@ -66,8 +79,14 @@ function activateFunction(app, palette) {
     ** here, an ICommandPalette
     */
     console.log('JupyterLab extension jupyterlab_extensionSandbox is activated!');
+    console.log('app:', app)
     console.log('app commands:', app.commands);
+    console.log('app.docRegistry:', app.docRegistry)
+    //for (m in app.docRegistry.modelFactories) {
+    //  console.log(m)
+    //}
     console.log('ICommandPalette:', palette)
+    console.log('docMgr:', docMgr)
 
     // Create a blank content widget inside of a MainAreaWidget
     const content = new Widget();
@@ -91,7 +110,7 @@ function activateFunction(app, palette) {
     });
 
     // Add the command to the palette.
-    palette.addItem({ command, category: 'Tutorial' });
+    palette.addItem({ command, category: 'extensionSandbox' });
 
     app.docRegistry.addWidgetExtension('Notebook', new ButtonExtension());
 
